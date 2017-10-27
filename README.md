@@ -26,7 +26,7 @@ npm run e2e
 # run all tests
 npm test
 
-# run vue-test-utils tests
+# run vue-test-utils tests (doesn't work yet)
 npm run component
 ```
 

@@ -14,6 +14,8 @@
     "component": "mocha-webpack --webpack-config webpack.config.js --require test/setup.js test/**/*.spec.js"
   },
   "dependencies": {
+    "hapi": "^16.6.2",
+    "nes": "^6.4.3",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
