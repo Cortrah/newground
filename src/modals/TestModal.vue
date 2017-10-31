@@ -2,19 +2,22 @@
 * Modal for experimenting with different ways to instantiate modals
 */
 <template>
-
-        <dm-modal :title="Title" ok-text="Save"
-               :show="show" effect="zoom" width="800px" :backdrop="(false)"
-               :callback="save" :close-callback="close" >
+        <dm-modal :title="Title"
+                  :show="show" effect="zoom" width="800px" :backdrop="(false)"
+                  ok-text="Save" :callback="save" :close-callback="close" >
 
         <div slot="modal-body" class="modal-body">
             <p>
-                gogo gadgeteer {{ msg }}
+                gogo gadgeteer
+                {{ message }}
+                random thingie
             </p>
         </div>
 
         <div slot="modal-footer" class="modal-footer">
-            <button type="button" class="btn btn-default" @click.prevent="close">Close</button>
+            <button type="button" class="btn btn-default" @click.prevent="close">
+                Close
+            </button>
         </div>
     </dm-modal>
 </template>
@@ -29,13 +32,12 @@
             DmModal: DmModal,
         },
 
-        created () {
-            this.$bus.$on('open-test-modal', this.open);
-            this.$bus.$on('close-test-modal', this.close);
-        },
-
         props: {
-            msg: 'indeed'
+            message: {
+                required: false,
+                type: String,
+                default:'indeedi'
+            }
         },
 
         data () {
@@ -45,11 +47,6 @@
         },
 
         methods: {
-
-            open: function(){
-                this.show = true;
-            },
-
             close: function(){
                 this.show = false;
             },

@@ -10,7 +10,7 @@
         </div>
 
         <div id="modalStack" v-for="mod in modals">
-            <test-modal></test-modal>
+            <test-modal :message="mod.message"></test-modal>
         </div>
 
     </div>
@@ -20,6 +20,8 @@
     import Vue from 'vue'
     import TestModal from './modals/TestModal.vue'
     import HelloWorld from './components/HelloWorld.vue'
+
+    let Constructor = Vue.extend(TestModal);
 
     export default {
         name: 'app',
@@ -38,12 +40,13 @@
                 this.hellos.push({msg: "gogo:" + new Date().toString()});
             },
             modalTest: function () {
-                let Constructor = Vue.extend(TestModal);
                 let testModal = new Constructor({
                     el: this.$el.modalStack,
                     parent: this,
+                    message: "hapidance:" + new Date().toString()
                 });
                 this.modals.push(testModal);
+                console.log(this.modals);
             }
         }
     }

@@ -10,7 +10,7 @@
         props: {
             'msg': {
                 required: false,
-                default: "gogo"
+                default: "default"
             }
         }
     }
