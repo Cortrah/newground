@@ -1,38 +1,51 @@
 <template>
-  <div id="app">
-    <router-view/>
+    <div id="app">
+        <router-view/>
 
-    <button @click.prevent="openTest">test</button>
+        <button @click.prevent="helloTest">hello</button>
+        <button @click.prevent="modalTest">modal</button>
 
-    <div id="modalStack"></div>
-  </div>
+        <div id="helloStack" v-for="hello in hellos">
+            <hello-world :msg="hello.msg"></hello-world>
+        </div>
+
+        <div id="modalStack" v-for="mod in modals">
+            <test-modal></test-modal>
+        </div>
+
+    </div>
 </template>
 
 <script>
-  import Vue from 'vue'
-  import TestModal from './modals/TestModal.vue'
+    import Vue from 'vue'
+    import TestModal from './modals/TestModal.vue'
+    import HelloWorld from './components/HelloWorld.vue'
 
-  export default {
-    name: 'app',
-    components: {
-      TestModal
-    },
-    methods: {
-      openTest: function() {
-
-        let Constructor = Vue.extend(TestModal);
-
-        new Vue({
-          el: '#modalStack',
-          mounted: function() {
-            let testModal = new Constructor({
-              el: this.$el,
-              parent: this,
-            });
-          },
-        });
-      },
+    export default {
+        name: 'app',
+        components: {
+            TestModal,
+            HelloWorld
+        },
+        data: function () {
+            return {
+                hellos: [],
+                modals: []
+            }
+        },
+        methods: {
+            helloTest: function () {
+                this.hellos.push({msg: "gogo:" + new Date().toString()});
+            },
+            modalTest: function () {
+                let Constructor = Vue.extend(TestModal);
+                let testModal = new Constructor({
+                    el: this.$el.modalStack,
+                    parent: this,
+                });
+                this.modals.push(testModal);
+            }
+        }
     }
-  }
 </script>
 

@@ -9,7 +9,7 @@
 
         <div slot="modal-body" class="modal-body">
             <p>
-                gogo gadget
+                gogo gadgeteer {{ msg }}
             </p>
         </div>
 
@@ -32,6 +32,10 @@
         created () {
             this.$bus.$on('open-test-modal', this.open);
             this.$bus.$on('close-test-modal', this.close);
+        },
+
+        props: {
+            msg: 'indeed'
         },
 
         data () {
