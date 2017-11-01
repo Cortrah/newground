@@ -35,6 +35,7 @@
 <script>
 
     export default {
+
         name: "DmModal",
         props: {
             closeCallback: {
@@ -131,6 +132,9 @@
 <style>
     .modal {
         transition: all 0.3s ease;
+        position: absolute;
+        overflow: visible;
+
     }
     .modal.in {
         background-color: rgba(0,0,0,0.5);
