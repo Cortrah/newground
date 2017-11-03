@@ -3,8 +3,8 @@
 */
 <template>
         <dm-modal title="Test Modal with Simple Data"
-                  :show="show" effect="zoom" width="800px" :backdrop="(false)"
-                  ok-text="Save" :callback="save" :close-callback="close" >
+                  :show="show" effect="zoom" width="800px"
+                  :backdrop="(false)" :close-callback="close" >
 
         <div slot="modal-body" class="modal-body">
             <div>{{ internalValue.basicString }}</div>

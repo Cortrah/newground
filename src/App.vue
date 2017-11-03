@@ -46,6 +46,7 @@
             },
 
             openSimpleDataModal: function() {
+
                 let simpleData = {
                     data: {
                         modalName: "SimpleDataModal",
