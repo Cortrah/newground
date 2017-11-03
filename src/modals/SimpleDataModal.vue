@@ -7,6 +7,7 @@
                   ok-text="Save" :callback="save" :close-callback="close" >
 
         <div slot="modal-body" class="modal-body">
+            <div>{{ internalValue.basicString }}</div>
             <input
                 name="textguy"
                 type="text"
@@ -16,14 +17,10 @@
             <div v-if="errors.has('textguy')" class="error">
                 {{ errors.first('textguy')}}
             </div>
-            <div>{{ internalValue.basicString }}</div>
             <button @click.prevent="changeBasicString">change prop</button>
         </div>
 
         <div slot="modal-footer" class="modal-footer">
-            <button type="button" class="btn btn-default" @click.prevent="save">
-                Save
-            </button>
             <button type="button" class="btn btn-default" @click.prevent="close">
                 Close
             </button>
@@ -50,6 +47,7 @@
         data () {
             return {
                 show: true,
+                // we initialize our internalValue to the value prop
                 internalValue: this.value,
             }
         },
@@ -63,8 +61,7 @@
                 }
             },
             'value': function(newValue) {
-                // When the internal value changes, we $emit an event. Because this event is
-                // named 'input', v-model will automatically update the parent value
+                // When the external prop value changes, we update our internalvalue
                 this.internalValue = newValue;
             }
         },
@@ -72,9 +69,6 @@
         methods: {
             changeBasicString: function(){
                 this.internalValue.basicString = "Dangermouse";
-            },
-            save: function(){
-                console.log("save called");
             },
             close: function(){
                 this.show = false;

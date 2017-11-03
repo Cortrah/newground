@@ -7,6 +7,16 @@
               ok-text="Save" :callback="save" :close-callback="close" >
 
         <div slot="modal-body" class="modal-body">
+
+            <div>{{ value.complexObject.name }}</div>
+            <div>{{ value.complexObject.thing1 }}</div>
+            <div>{{ value.complexObject.thing2 }}</div>
+            <br/>
+
+            <div>Deeply Nested: {{ value.complexObject.embeddedSimpleton.data.basicString }}</div>
+            <br/>
+
+            <div>{{ value.message }}</div>
             <input
                 name="textguy"
                 type="text"
@@ -16,7 +26,10 @@
             <div v-if="errors.has('textguy')" class="error">
                 {{ errors.first('textguy')}}
             </div>
-            <button @click.prevent="changeBasicString">change prop</button>
+
+            <button @click.prevent="changeArray">Change Nested Array</button>
+            <button @click.prevent="pushArray">Push Nested Array</button>
+            <button @click.prevent="changeBasicString">Change Basic String</button>
             <button @click.prevent="openSimpleGuy">Open Simple Modal</button>
         </div>
 
@@ -41,16 +54,20 @@
         },
 
         props: {
+            // the value prop defines our api inputs
             value: {
                 modalName: "ComplexDataModal",
                 message: "at:" + new Date().getSeconds().toString(),
                 complexObject: {
                     name: 'A complex object with a name and some other objects',
                     thing1: false,
-                    thing2: function () {
-                        return "thing2 is a string as a function"
-                    },
-                    thing3: [1, 2, 3]
+                    thing2: [1, 2, 3],
+                    embeddedSimpleton: {
+                        data: {
+                            modalName: "SimpleDataModal",
+                            basicString: "more gadgeteering",
+                        }
+                    }
                 }
             }
         },
@@ -58,6 +75,7 @@
         data () {
             return {
                 show: true,
+                // we initialize our internalValue to the value prop
                 internalValue: this.value,
             }
         },
@@ -71,27 +89,29 @@
                 }
             },
             'value': function(newValue) {
-                // When the internal value changes, we $emit an event. Because this event is
-                // named 'input', v-model will automatically update the parent value
+                // When the external prop value changes, we update our internalvalue
                 this.internalValue = newValue;
             }
         },
 
         methods: {
             openSimpleGuy: function() {
-                let simpleData = {
-                    data: {
-                        modalName: "SimpleDataModal",
-                        basicString: "more gadgeteering",
-                    }
-                };
-                this.$bus.$emit('open-modal', simpleData);
+                this.$bus.$emit('open-modal', this.value.complexObject.embeddedSimpleton);
+            },
+            pushArray: function(){
+                this.internalValue.complexObject.thing2.push(9);
+                this.$emit('input', this.internalValue);
+            },
+            changeArray: function(){
+                this.internalValue.complexObject.thing2 = [4,5,6];
+                this.$emit('input', this.internalValue);
             },
             changeBasicString: function(){
-                this.internalValue.message = "Dangermouse";
+                this.internalValue.message = "Couageous Cat and Minutemouse";
+                this.$emit('input', this.internalValue);
             },
             save: function(){
-                console.log("save called");
+                this.$emit('input', this.internalValue);
             },
             close: function(){
                 this.show = false;
