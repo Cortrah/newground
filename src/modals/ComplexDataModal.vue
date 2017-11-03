@@ -2,7 +2,7 @@
 * Modal for experimenting with different ways to instantiate modals
 */
 <template>
-    <dm-modal title="Simple Test Modal"
+    <dm-modal title="Test Modal with Complex Data"
               :show="show" effect="zoom" width="800px" :backdrop="(false)"
               ok-text="Save" :callback="save" :close-callback="close" >
 
@@ -10,17 +10,14 @@
             <input
                 name="textguy"
                 type="text"
-                v-model="internalValue.basicString"
-                v-validate="{
-                    rules: {
-                        max: 15
-                    }}"
+                v-model="internalValue.message"
+                v-validate="'max:12'"
                 class="form-control"/>
             <div v-if="errors.has('textguy')" class="error">
                 {{ errors.first('textguy')}}
             </div>
             <button @click.prevent="changeBasicString">change prop</button>
-            <button @click.prevent="gogoGadget(internalValue.basicString)">{{ internalValue.basicString }}</button>
+            <button @click.prevent="openSimpleGuy">Open Simple Modal</button>
         </div>
 
         <div slot="modal-footer" class="modal-footer">
@@ -71,8 +68,6 @@
                 // named 'input', v-model will automatically update the parent value
                 if(newValue != null){
                     this.$emit('input', newValue);
-                } else {
-                    this.$emit('input', '');
                 }
             },
             'value': function(newValue) {
@@ -83,12 +78,17 @@
         },
 
         methods: {
-            gogoGadget: function(message){
-                console.log("gogo Gadget called");
-                console.log(message);
+            openSimpleGuy: function() {
+                let simpleData = {
+                    data: {
+                        modalName: "SimpleDataModal",
+                        basicString: "more gadgeteering",
+                    }
+                };
+                this.$bus.$emit('open-modal', simpleData);
             },
             changeBasicString: function(){
-                this.value.basicString = "Dangermouse";
+                this.internalValue.message = "Dangermouse";
             },
             save: function(){
                 console.log("save called");

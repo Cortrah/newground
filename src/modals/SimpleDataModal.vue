@@ -2,7 +2,7 @@
 * Modal for experimenting with different ways to instantiate modals
 */
 <template>
-        <dm-modal title="Simple Test Modal"
+        <dm-modal title="Test Modal with Simple Data"
                   :show="show" effect="zoom" width="800px" :backdrop="(false)"
                   ok-text="Save" :callback="save" :close-callback="close" >
 
@@ -11,16 +11,13 @@
                 name="textguy"
                 type="text"
                 v-model="internalValue.basicString"
-                v-validate="{
-                    rules: {
-                        max: 15
-                    }}"
+                v-validate="'max:12'"
                 class="form-control"/>
             <div v-if="errors.has('textguy')" class="error">
                 {{ errors.first('textguy')}}
             </div>
+            <div>{{ internalValue.basicString }}</div>
             <button @click.prevent="changeBasicString">change prop</button>
-            <button @click.prevent="gogoGadget(internalValue.basicString)">{{ internalValue.basicString }}</button>
         </div>
 
         <div slot="modal-footer" class="modal-footer">
@@ -63,8 +60,6 @@
                 // named 'input', v-model will automatically update the parent value
                 if(newValue != null){
                     this.$emit('input', newValue);
-                } else {
-                    this.$emit('input', '');
                 }
             },
             'value': function(newValue) {
@@ -75,10 +70,6 @@
         },
 
         methods: {
-            gogoGadget: function(message){
-                console.log("gogo Gadget called");
-                console.log(message);
-            },
             changeBasicString: function(){
                 this.internalValue.basicString = "Dangermouse";
             },
