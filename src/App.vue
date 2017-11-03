@@ -1,20 +1,16 @@
 <template>
     <div id="app">
-        <router-view/>
-
-        <button @click.prevent="helloTest">hi</button>
-        <button @click.prevent="modalTest">modal</button>
+        <button @click.prevent="helloTest">Hi</button>
+        <button @click.prevent="openFakeModal">Fake</button>
+        <button @click.prevent="openSimpleDataModal">Simple</button>
+        <button @click.prevent="openComplexDataModal">Complex</button>
 
         <div id="helloStack" v-for="hello in hellos">
             <hello-world :msg="hello.msg"></hello-world>
         </div>
 
-        <div id="modalStack" v-for="mod in modals">
-            <test-modal :title='mod.title'
-                        :message='mod.message'
-                        :complexObject="mod.complexObject"
-                        save="saveIt">
-            </test-modal>
+        <div id="modalStack" v-for="(modalObj, index) in modalStack">
+            <component v-model="modalObj.data" :is="modalObj.data.modalName"></component>
         </div>
 
     </div>
@@ -23,46 +19,62 @@
 <script>
     import Vue from 'vue'
     import DmModal from './modals/DmModal.vue'
-    import TestModal from './modals/TestModal.vue'
     import HelloWorld from './components/HelloWorld.vue'
-
-    let Constructor = Vue.extend(TestModal);
+    import FakeModal from './modals/FakeModal.vue'
+    import SimpleDataModal from './modals/SimpleDataModal.vue'
+    import ComplexDataModal from './modals/ComplexDataModal.vue'
 
     export default {
         name: 'app',
         components: {
-            TestModal,
-            HelloWorld
+            HelloWorld,
+            FakeModal,
+            SimpleDataModal,
+            ComplexDataModal,
         },
         data: function () {
             return {
                 hellos: [],
-                modals: []
+                modalStack: []
             }
         },
         methods: {
             helloTest: function () {
-                this.hellos.push({msg: "gogo:" + this.modals.length + " "});
+                this.hellos.push({msg: "hello:" + this.modalStack.length + " "});
             },
-            modalTest: function () {
-                let testData = {
-                    el: this.$el.modalStack,
-                    parent: this,
-                    title: "Hapi Dance",
-                    message: "hapidance:" + new Date().toString(),
-                    complexObject: {
-                        name: 'A complex object with a name and some other objects',
-                        thing1: false,
-                        thing2: function(){ return "thing2 as a function"},
-                        thing3: [1,2,3]
+            openFakeModal: function() {
+                let fakeData = {
+                    data: {
+                        modalName: "FakeModal",
                     }
                 };
-                let testModal = new Constructor(testData);
-                this.modals.push(testData);
-                console.log(this.modals);
+                this.modalStack.push(fakeData);
             },
-            saveIt: function () {
-                console.log("saving");
+            openSimpleDataModal: function() {
+                let simpleData = {
+                    data: {
+                        modalName: "SimpleDataModal",
+                        basicString: "gogo gadget",
+                    }
+                };
+                this.modalStack.push(simpleData);
+            },
+            openComplexDataModal: function() {
+                let complexData = {
+                    data: {
+                        modalName: "ComplexDataModal",
+                        message: "at:" + new Date().getSeconds().toString(),
+                        complexObject: {
+                            name: 'A complex object with a name and some other objects',
+                            thing1: false,
+                            thing2: function () {
+                                return "thing2 is a string as a function"
+                            },
+                            thing3: [1, 2, 3]
+                        }
+                    }
+                };
+                this.modalStack.push(complexData);
             }
         }
     }
