@@ -43,6 +43,9 @@
             this.$bus.$on("open-modal", function(data) {
                 _self.eventSwitch("open-modal", data);
             });
+            this.$bus.$on("close-modal", function() {
+                _self.eventSwitch("close-modal");
+            });
         },
 
         methods: {
@@ -51,6 +54,10 @@
                 switch (event) {
                     case 'open-modal': {
                         this.modalStack.push(data);
+                        break;
+                    }
+                    case 'close-modal': {
+                        this.modalStack.pop();
                         break;
                     }
                 }

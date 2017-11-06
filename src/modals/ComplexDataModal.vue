@@ -116,6 +116,7 @@
             },
             close: function(){
                 this.show = false;
+                this.$bus.$emit('close-modal');
             },
         }
     }
