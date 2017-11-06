@@ -13,7 +13,7 @@
             <div>{{ value.complexObject.thing2 }}</div>
             <br/>
 
-            <div>Deeply Nested: {{ value.complexObject.embeddedSimpleton.data.basicString }}</div>
+            <div>Deeply Nested: {{ value.complexObject.embeddedSimpleton.basicString }}</div>
             <br/>
 
             <div>{{ value.message }}</div>
@@ -56,17 +56,14 @@
         props: {
             // the value prop defines our api inputs
             value: {
-                modalName: "ComplexDataModal",
                 message: "at:" + new Date().getSeconds().toString(),
                 complexObject: {
                     name: 'A complex object with a name and some other objects',
                     thing1: false,
                     thing2: [1, 2, 3],
                     embeddedSimpleton: {
-                        data: {
-                            modalName: "SimpleDataModal",
-                            basicString: "more gadgeteering",
-                        }
+                        modalName: "SimpleDataModal",
+                        basicString: "more gadgeteering",
                     }
                 }
             }
@@ -96,7 +93,11 @@
 
         methods: {
             openSimpleGuy: function() {
-                this.$bus.$emit('open-modal', this.value.complexObject.embeddedSimpleton);
+                let simpleData = {
+                    modalName: "SimpleDataModal",
+                    data: this.value.complexObject.embeddedSimpleton
+                };
+                this.$bus.$emit('open-modal', simpleData );
             },
             pushArray: function(){
                 this.internalValue.complexObject.thing2.push(9);

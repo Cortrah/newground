@@ -1,10 +1,9 @@
 <template>
     <div id="app">
-        <button @click.prevent="openSimpleDataModal">Simple</button>
-        <button @click.prevent="openComplexDataModal">Complex</button>
+        <button @click.prevent="openComplexDataModal">Open Complex Modal</button>
 
         <div id="modalStack" v-for="(modalObj, index) in modalStack">
-            <component v-model="modalObj.data" :is="modalObj.data.modalName"></component>
+            <component v-model="modalObj.data" :is="modalObj.modalName"></component>
         </div>
     </div>
 </template>
@@ -23,7 +22,19 @@
         },
         data: function () {
             return {
-                modalStack: []
+                modalStack: [],
+                complexData: {
+                    message: "ok",
+                    complexObject: {
+                        name: 'A complex object with a name and some other objects',
+                        thing1: false,
+                        thing2: [1, 2, 3],
+                        embeddedSimpleton: {
+                            modalName: "SimpleDataModal",
+                            basicString: "more gadgeteering",
+                        }
+                    }
+                }
             }
         },
 
@@ -45,34 +56,10 @@
                 }
             },
 
-            openSimpleDataModal: function() {
-
-                let simpleData = {
-                    data: {
-                        modalName: "SimpleDataModal",
-                        basicString: "gogo gadget",
-                    }
-                };
-                this.$bus.$emit('open-modal', simpleData);
-            },
-
             openComplexDataModal: function() {
                 let complexData = {
-                    data: {
-                        modalName: "ComplexDataModal",
-                        message: "at:" + new Date().getSeconds().toString(),
-                        complexObject: {
-                            name: 'A complex object with a name and some other objects',
-                            thing1: false,
-                            thing2: [1, 2, 3],
-                            embeddedSimpleton: {
-                                data: {
-                                    modalName: "SimpleDataModal",
-                                    basicString: "more gadgeteering",
-                                }
-                            }
-                        }
-                    }
+                    modalName: "ComplexDataModal",
+                    data: this.complexData
                 };
                 this.$bus.$emit('open-modal', complexData);
             }
