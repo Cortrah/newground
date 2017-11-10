@@ -33,7 +33,7 @@ let 2404 = {
       "machineName": "DINOSAURS",
       "title": "Dinosaurs#@!",
       "titleInternal": "Dinosaurs",
-      "narrative": "<p>tests require no instruction!</p>
+      "narrative": "tests require no instruction!",
       "footer": null,
       "type": {
         "id": 1,
