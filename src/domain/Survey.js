@@ -22,7 +22,7 @@ export default class Survey {
     }
 
     clone() {
-        let newSurvey = new Survey(...this);
+        let newSurvey = Object.assign({}, this);
         newSurvey.group = this.group.clone();
         return newSurvey;
     }

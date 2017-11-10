@@ -1,6 +1,14 @@
 <template>
     <div id="app">
         <button @click.prevent="openComplexDataModal">Open Complex Modal</button>
+        <br/>
+        <button @click.prevent="createGroup">Create Group</button>
+        <br/>
+        <button @click.prevent="cloneGroup">Clone Group</button>
+        <br/>
+        <button @click.prevent="createSurvey">Create Survey</button>
+        <br/>
+        <button @click.prevent="cloneSurvey">Clone Survey</button>
 
         <div id="modalStack" v-for="(modalObj, index) in modalStack">
             <component v-model="modalObj.data" :is="modalObj.modalName"></component>
@@ -13,6 +21,8 @@
     import DmModal from './modals/DmModal.vue'
     import SimpleDataModal from './modals/SimpleDataModal.vue'
     import ComplexDataModal from './modals/ComplexDataModal.vue'
+    import Group from './domain/Group';
+    import Survey from './domain/Survey';
 
     export default {
         name: 'app',
@@ -22,6 +32,8 @@
         },
         data: function () {
             return {
+                g1: null,
+                s1: null,
                 modalStack: [],
                 complexData: {
                     message: "ok",
@@ -69,7 +81,55 @@
                     data: this.complexData
                 };
                 this.$bus.$emit('open-modal', dataForModal);
-            }
+            },
+
+            createGroup: function() {
+                this.g1 = new Group({
+                    id: 4,
+                    title: 'a',
+                    titleInternal: 'a',
+                    machineName: 'a',
+                    narrative: 'a',
+                    rowLabelColumnHeader: 'a',
+                    type: null,
+                    format: null,
+                    rowLabels: [],
+                    questions: [],
+                    children: [],
+                    nonChildQuestions: [],
+                    buttonLabelAdd: 'addular',
+                    buttonLabelRemove: 'removeular'
+                });
+                console.log(this.g1);
+            },
+
+            createSurvey: function() {
+                this.s1 = new Survey({
+                    id: 4,
+                    title: "b",
+                    titleInternal: "c",
+                    machineName: "D",
+                    narrative:  "eeeeee",
+                    groupVersionMachineName: "FFF",
+                    group: this.g1,
+                });
+                console.log(this.s1);
+            },
+
+            cloneGroup: function() {
+                console.log(this.g1);
+                let g2 = this.g1.clone();
+                console.log(g2);
+            },
+
+            cloneSurvey: function() {
+                console.log(this.s1);
+                let s2 = this.s1.clone();
+                this.g1.title = "gogo";
+                console.log(s2);
+                console.log(this.g1.title);
+                console.log(s2.group.title);
+            },
         }
     }
 </script>
