@@ -64,11 +64,11 @@
             },
 
             openComplexDataModal: function() {
-                let complexData = {
+                let dataForModal = {
                     modalName: "ComplexDataModal",
                     data: this.complexData
                 };
-                this.$bus.$emit('open-modal', complexData);
+                this.$bus.$emit('open-modal', dataForModal);
             }
         }
     }
