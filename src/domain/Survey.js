@@ -10,7 +10,7 @@ export default class Survey {
                     machineName = '',
                     narrative = '',
                     groupVersionMachineName = '',
-                    group = new Group()}) {
+                    group = null}) {
 
         this.id = id;
         this.title = title;
@@ -18,7 +18,7 @@ export default class Survey {
         this.machineName = machineName;
         this.narrative = narrative;
         this.groupVersionMachineName = groupVersionMachineName;
-        this.group = group;
+        this.group = new Group(group);
     }
 
     clone() {
@@ -27,3 +27,4 @@ export default class Survey {
         return newSurvey;
     }
 }
+
