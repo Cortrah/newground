@@ -1,24 +1,4 @@
-// GROUP_VERSIONS
-//     ID: 2404
-//     MACHINE_NAME: DINO_TESTING_GROUP_NAME
-//     GROUP_OBJECT_ID: 2867
-//
-// GROUPS
-//     ID: 2867
-//     MACHINE_NAME: FNL_CRTF_SBSTN_CMPLT
-//     NARRATIVE: This survey form is always required for final submissions.
-//     TITLE: Final Certificate of Substantial Completion
-//     TITLE_INTERNAL: Final Certificate of Substantial Completion
-//
-// GROUP_HIERARCHIES
-//     ID:
-//     PARENT_ID:
-//     GROUP_ID:
-//     POSITION:
-//     RULE_ID:
-//     NARRATIVE:
-
-let 2404 = {
+{
   "id": 2404,
   "machineName": "DINO_TESTING_GROUP_NAME",
   "group": {
