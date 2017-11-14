@@ -1,14 +1,20 @@
 <template>
     <div id="app">
-        <button @click.prevent="openComplexDataModal">Open Complex Modal</button>
-        <br/>
-        <button @click.prevent="createGroup">Create Group</button>
-        <br/>
-        <button @click.prevent="cloneGroup">Clone Group</button>
-        <br/>
-        <button @click.prevent="createSurvey">Create Survey</button>
-        <br/>
-        <button @click.prevent="cloneSurvey">Clone Survey</button>
+        <button @click.prevent="openComplexDataModal">
+            Open Complex Modal
+        </button>
+        <button @click.prevent="createGroup">
+            Create Group
+        </button>
+        <button @click.prevent="cloneGroup">
+            Clone Group
+        </button>
+        <button @click.prevent="createSurvey">
+            Create Survey
+        </button>
+        <button @click.prevent="cloneSurvey">
+            Clone Survey
+        </button>
 
         <div id="modalStack" v-for="(modalObj, index) in modalStack">
             <component v-model="modalObj.data" :is="modalObj.modalName"></component>
