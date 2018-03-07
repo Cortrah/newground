@@ -93,11 +93,11 @@
 
         methods: {
             openSimpleGuy: function() {
-                let simpleData = {
+                let dataForModal = {
                     modalName: "SimpleDataModal",
                     data: this.value.complexObject.embeddedSimpleton
                 };
-                this.$bus.$emit('open-modal', simpleData );
+                this.$bus.$emit('open-modal', dataForModal );
             },
             pushArray: function(){
                 this.internalValue.complexObject.thing2.push(9);

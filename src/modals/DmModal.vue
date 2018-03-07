@@ -7,6 +7,7 @@
          }">
         <div v-bind:class="{'modal-dialog':true,'modal-lg':large,'modal-sm':small}" role="document"
              v-bind:style="{width: optionalWidth}">
+
             <div v-bind:class="{ 'modal-content' : true, 'tabs' : tabs  }">
                 <slot name="modal-header" v-if="title">
                     <div class="modal-header">
@@ -18,9 +19,11 @@
                         </h4>
                     </div>
                 </slot>
+
                 <slot name="modal-body">
-                    <div class="modal-body"></div>
+                    <div class="modal-body" style="background-color: #f4e8d1; overflow-y: scroll"></div>
                 </slot>
+
                 <slot name="modal-footer">
                     <div class="modal-footer">
                         <a class="btn btn-default" @click.prevent="close">{{ cancelText }}</a>
@@ -35,6 +38,9 @@
 <script>
 
     export default {
+        // uses the parent component's validator instance
+        // http://vee-validate.logaretm.com/advanced.html#inject
+        inject: ['$validator'],
 
         name: "DmModal",
         props: {
@@ -93,8 +99,10 @@
                 if (val) {
                     el.querySelector('.modal-content').focus();
                     el.style.display = 'block';
+                    el.style.overflow = 'visible';
                     setTimeout(()=> el.classList.add('in'), 0);
-                    body.classList.add('modal-open')
+                    body.classList.add('modal-open');
+                    body.style.overflow = 'hidden';
                 } else {
                     if (this._blurModalContentEvent) this._blurModalContentEvent.remove();
                     el.classList.remove('in');
@@ -121,9 +129,9 @@
                 if (this.closeCallback) {
                     this.closeCallback();
                 }
-
                 const body = document.body;
                 body.classList.remove('modal-open');
+                body.style.overflow = 'auto';
             }
         }
     }
@@ -132,9 +140,8 @@
 <style>
     .modal {
         transition: all 0.3s ease;
-        position: absolute;
-        overflow: visible;
-
+        position: fixed;
+        height: 100%;
     }
     .modal.in {
         background-color: rgba(0,0,0,0.5);
@@ -158,5 +165,14 @@
         -webkit-transform: translate3d(0, -300px, 0);
         transform: translate3d(0, -300px, 0);
         opacity: 1;
+    }
+
+    .modal-content {
+        height: 620px;
+    }
+    .modal-body {
+        background-color: #FAFAFA;
+        height: 500px;
+        overflow-y: auto
     }
 </style>
